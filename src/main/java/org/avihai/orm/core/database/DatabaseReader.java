@@ -48,7 +48,8 @@ public class DatabaseReader {
             String columnType = columns.getString("TYPE_NAME");
             int columnSize = columns.getInt("COLUMN_SIZE");
             boolean isNullable = columns.getString("IS_NULLABLE").equals("YES");
-            String javaType = ColumnMap.mapSqlTypeToJavaType(columnType, isNullable);
+            Class<?> javaType = ColumnMap.mapSqlTypeToJavaType(columnType, isNullable);
+
             String columnDef = columns.getString("COLUMN_DEF");
 
             ColumnMetadata columnMetadata = ColumnMetadata.builder()

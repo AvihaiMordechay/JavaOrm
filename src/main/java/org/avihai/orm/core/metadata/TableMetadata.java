@@ -1,12 +1,14 @@
 package org.avihai.orm.core.metadata;
 
 import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
 import lombok.ToString;
 
 import java.util.List;
 
 @Builder
-@ToString
+@Getter
 public class TableMetadata {
     private String tableName;
     private List<ColumnMetadata> columns;
