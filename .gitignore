@@ -33,3 +33,5 @@ target/
 delombok/
 
 generated-sources/
+
+resources/ormconfig.yaml

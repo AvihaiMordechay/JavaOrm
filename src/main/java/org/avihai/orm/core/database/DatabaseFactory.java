@@ -2,7 +2,6 @@ package org.avihai.orm.core.database;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.avihai.orm.cli.UserInput;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,10 +11,9 @@ import java.sql.Statement;
 public class DatabaseFactory {
     @Getter
     private Connection connection;
-    public void connect(UserInput userInput) {
+    public void connect(DatabaseConfig databaseConfig) {
         try {
-            DatabaseConfig databaseConfig = userInput.mapToDatabaseConfig();
-            Class.forName(databaseConfig.getDbType());
+            Class.forName(databaseConfig.getDriverName());
             this.connection = DriverManager.getConnection(databaseConfig.getUrl(), databaseConfig.getUsername(), databaseConfig.getPassword());
             log.info("Connected to database successfully!");
         } catch (Exception e) {

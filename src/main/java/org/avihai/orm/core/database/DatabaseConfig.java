@@ -1,13 +1,14 @@
 package org.avihai.orm.core.database;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
-@Builder
 @ToString
+@Slf4j
 public class DatabaseConfig {
-    private String dbType;
+    @Getter
+    private String driverName;
     @Getter
     private String url;
     @Getter
@@ -15,12 +16,26 @@ public class DatabaseConfig {
     @Getter
     private String password;
 
-    public String getDbType() {
-        return switch (dbType.toLowerCase()) {
+    public DatabaseConfig(String user, String password, String url) {
+        try {
+            this.username = user;
+            this.password = password;
+            this.url = url;
+            String[] urlParts = url.split("://");
+            String dbType = urlParts[0].split(":")[1];
+            this.driverName = getDriverName(dbType.toLowerCase());
+        } catch (Exception e) {
+            log.error("error mapping user input to DatabaseConfig", e);
+        }
+    }
+
+    public String getDriverName(String dbType) {
+        return switch (dbType) {
             case "postgresql" -> "org.postgresql.Driver";
             case "mysql" -> "com.mysql.cj.jdbc.Driver";
             case "sqlite" -> "org.sqlite.JDBC";
             default -> throw new IllegalArgumentException("Unsupported database type: " + dbType);
         };
     }
+
 }
