@@ -1,0 +1,35 @@
+.idea/
+*.iml
+*.iws
+out/
+
+.vscode/
+
+# Logs
+*.log
+
+.DS_Store
+Thumbs.db
+
+# Maven
+target/
+
+
+# Java compiled files
+*.class
+
+# Environment files
+.env
+*.yaml.local
+*.yml.local
+
+# Backup / temp
+*.bak
+*.tmp
+*.swp
+
+.idea_modules/
+
+delombok/
+
+generated-sources/
