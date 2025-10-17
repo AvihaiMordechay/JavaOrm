@@ -1,11 +1,11 @@
-package org.avihai.orm.core.generator;
+package org.avihai.orm.core.generator.java;
 
 
 import org.avihai.orm.core.metadata.TableMetadata;
 
 import java.util.List;
 
-public class RepositoryGenerator extends Generator {
+public class RepositoryGenerator extends JavaGenerator {
     public RepositoryGenerator(List<TableMetadata> tables, boolean withLombok) {
         super(tables, withLombok);
     }

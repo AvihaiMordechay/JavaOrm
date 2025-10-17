@@ -1,4 +1,4 @@
-package org.avihai.orm.cli.configuration;
+package org.avihai.orm.core.configuration.ormconfig;
 
 import lombok.Getter;
 import lombok.Setter;

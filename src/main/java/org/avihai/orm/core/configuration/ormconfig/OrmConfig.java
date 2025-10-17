@@ -1,4 +1,4 @@
-package org.avihai.orm.cli.configuration;
+package org.avihai.orm.core.configuration.ormconfig;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class OrmConfig {
     private DatabaseSection database;
-    private CodegenSection codegen;
+    private OptionsSection options;
 }

@@ -1,4 +1,4 @@
-package org.avihai.orm.core.generator;
+package org.avihai.orm.core.utils;
 
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;

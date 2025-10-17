@@ -1,4 +1,4 @@
-package org.avihai.orm.core.generator;
+package org.avihai.orm.core.generator.java;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -6,15 +6,16 @@ import com.squareup.javapoet.TypeSpec;
 import lombok.extern.slf4j.Slf4j;
 import org.avihai.orm.core.metadata.ColumnMetadata;
 import org.avihai.orm.core.metadata.TableMetadata;
+import org.avihai.orm.core.utils.FileWriterUtil;
 
 import javax.lang.model.element.Modifier;
 import java.nio.file.Path;
 import java.util.List;
 
-import static org.avihai.orm.core.util.Constants.*;
+import static org.avihai.orm.core.utils.Constants.*;
 
 @Slf4j
-public class EntityGenerator extends Generator {
+public class EntityGenerator extends JavaGenerator {
 
     public EntityGenerator(List<TableMetadata> tables, boolean withLombok) {
         super(tables, withLombok);
@@ -32,7 +33,7 @@ public class EntityGenerator extends Generator {
                 }
                 TypeSpec entity = entityBuilder.build();
 
-                FileWriterUtil.writeToFile(Path.of("src/main/java"), entity, table.getTableName());
+                FileWriterUtil.writeToFile(Path.of("src/main/java"), entity, table.getName());
             });
         } catch (Exception e) {
             log.error("error in entity generator", e);
@@ -41,7 +42,7 @@ public class EntityGenerator extends Generator {
     }
 
     private TypeSpec.Builder generateEntityWithLombok(TableMetadata table) {
-        TypeSpec.Builder entityBuilder = TypeSpec.classBuilder(toClassName(table.getTableName()))
+        TypeSpec.Builder entityBuilder = TypeSpec.classBuilder(toClassName(table.getName()))
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(ClassName.get(LOMBOK, L_DATA))
                 .addAnnotation(ClassName.get(LOMBOK, L_BUILDER))
@@ -52,7 +53,7 @@ public class EntityGenerator extends Generator {
     }
 
     private TypeSpec.Builder generateEntityWithoutLombok(TableMetadata table) {
-        TypeSpec.Builder entityBuilder = TypeSpec.classBuilder(toClassName(table.getTableName()))
+        TypeSpec.Builder entityBuilder = TypeSpec.classBuilder(toClassName(table.getName()))
                 .addModifiers(Modifier.PUBLIC);
         addConstructorNoArgs(entityBuilder);
         addConstructorAllArgs(entityBuilder, table);
@@ -61,7 +62,7 @@ public class EntityGenerator extends Generator {
     }
 
     private void addColumnsData(TableMetadata table, TypeSpec.Builder entityBuilder) {
-        StringBuilder toStringBody = new StringBuilder("return \"" + toClassName(table.getTableName()) + "(\" +\n");
+        StringBuilder toStringBody = new StringBuilder("return \"" + toClassName(table.getName()) + "(\" +\n");
         List<ColumnMetadata> columns = table.getColumns();
         for (int i = 0; i < columns.size(); i++) {
             ColumnMetadata column = columns.get(i);

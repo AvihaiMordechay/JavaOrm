@@ -1,11 +1,11 @@
-package org.avihai.orm.core.generator;
+package org.avihai.orm.core.generator.java;
 
 import lombok.AllArgsConstructor;
 import org.avihai.orm.core.metadata.TableMetadata;
 import java.util.List;
 
 @AllArgsConstructor
-public abstract class Generator {
+public abstract class JavaGenerator {
 
     protected List<TableMetadata> tables;
     protected boolean withLombok;

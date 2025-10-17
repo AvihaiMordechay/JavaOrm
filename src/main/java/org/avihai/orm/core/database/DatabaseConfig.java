@@ -1,19 +1,19 @@
 package org.avihai.orm.core.database;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.avihai.orm.core.utils.enums.DatabaseTypes;
 
 @ToString
 @Slf4j
+@Getter
 public class DatabaseConfig {
-    @Getter
     private String driverName;
-    @Getter
+    private DatabaseTypes dbType;
     private String url;
-    @Getter
     private String username;
-    @Getter
     private String password;
 
     public DatabaseConfig(String user, String password, String url) {
@@ -23,6 +23,7 @@ public class DatabaseConfig {
             this.url = url;
             String[] urlParts = url.split("://");
             String dbType = urlParts[0].split(":")[1];
+            this.dbType = DatabaseTypes.getDatabaseType(dbType);
             this.driverName = getDriverName(dbType.toLowerCase());
         } catch (Exception e) {
             log.error("error mapping user input to DatabaseConfig", e);

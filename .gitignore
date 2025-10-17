@@ -34,4 +34,10 @@ delombok/
 
 generated-sources/
 
-resources/ormconfig.yaml
+ormconfig.yaml
+
+schema.yaml
+
+mysql/
+
+word

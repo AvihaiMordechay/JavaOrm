@@ -1,10 +1,14 @@
-package org.avihai.orm.core.metadata;
+package org.avihai.orm.core.utils;
+
+import org.avihai.orm.core.database.DatabaseFactory;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.UUID;
+
+import static org.avihai.orm.core.utils.Constants.*;
 
 public class ColumnMap {
 
