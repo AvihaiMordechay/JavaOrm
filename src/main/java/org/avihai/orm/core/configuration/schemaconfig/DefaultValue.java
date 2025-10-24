@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class DefaultValue {
-    private Object value;
-    private Class<?> type;
+    public Object value;
+    public Class<?> type;
 
     public DefaultValue(String value, Class<?> type) {
         this.type = type;

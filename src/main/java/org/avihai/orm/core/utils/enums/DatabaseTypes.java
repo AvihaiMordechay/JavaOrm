@@ -1,14 +1,14 @@
 package org.avihai.orm.core.utils.enums;
 
 public enum DatabaseTypes {
-    MY_SQL,
+    MYSQL,
     POSTGRES,
     SQLITE;
 
     public static DatabaseTypes getDatabaseType(String dbType){
         return switch (dbType) {
             case "postgresql" -> POSTGRES;
-            case "mysql" -> MY_SQL;
+            case "mysql" -> MYSQL;
             case "sqlite" -> SQLITE;
             default -> throw new IllegalArgumentException("Unsupported database type: " + dbType);
         };

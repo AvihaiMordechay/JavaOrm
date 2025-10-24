@@ -8,6 +8,6 @@ import java.util.List;
 @Builder
 @Getter
 public class TableMetadata {
-    private String name;
-    private List<ColumnMetadata> columns;
+    public String name;
+    public List<ColumnMetadata> columns;
 }

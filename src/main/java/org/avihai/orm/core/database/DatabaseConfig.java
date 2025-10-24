@@ -24,7 +24,7 @@ public class DatabaseConfig {
             String[] urlParts = url.split("://");
             String dbType = urlParts[0].split(":")[1];
             this.dbType = DatabaseTypes.getDatabaseType(dbType);
-            this.driverName = getDriverName(dbType.toLowerCase());
+            this.driverName = getDriverName(dbType);
         } catch (Exception e) {
             log.error("error mapping user input to DatabaseConfig", e);
         }

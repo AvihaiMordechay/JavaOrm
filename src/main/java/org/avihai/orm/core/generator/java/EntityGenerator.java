@@ -18,7 +18,8 @@ import static org.avihai.orm.core.utils.Constants.*;
 public class EntityGenerator extends JavaGenerator {
 
     public EntityGenerator(List<TableMetadata> tables, boolean withLombok) {
-        super(tables, withLombok);
+        this.tables = tables;
+        this.withLombok = withLombok;
     }
 
     @Override

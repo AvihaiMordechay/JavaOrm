@@ -2,6 +2,7 @@ package org.avihai.orm.core.database;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.avihai.orm.core.generator.sql.MySqlGenerator;
 import org.avihai.orm.core.generator.sql.PostgresSqlGenerator;
 import org.avihai.orm.core.generator.sql.SqlGenerator;
 import org.avihai.orm.core.metadata.TableMetadata;
@@ -44,10 +45,12 @@ public class DatabaseFactory {
             );
             switch (databaseConfig.getDbType()){
                 case POSTGRES -> this.sqlGenerator = new PostgresSqlGenerator();
+                case MYSQL -> this.sqlGenerator = new MySqlGenerator();
+                default -> throw new IllegalArgumentException("Unsupported database type: " + databaseConfig.getDbType());
             }
-            log.info("✅ Connected to database successfully!");
+            log.info("Connected to database successfully!");
         } catch (Exception e) {
-            log.error("❌ Error connecting to database", e);
+            log.error("Error connecting to database", e);
             throw new RuntimeException(e);
         }
     }
@@ -90,7 +93,7 @@ public class DatabaseFactory {
             }
             return this.connection.createStatement();
         } catch (Exception e) {
-            log.error("❌ Error creating statement", e);
+            log.error("Error creating statement", e);
             throw new RuntimeException(e);
         }
     }

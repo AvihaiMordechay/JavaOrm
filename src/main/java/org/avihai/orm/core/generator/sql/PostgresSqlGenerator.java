@@ -19,40 +19,8 @@ public class PostgresSqlGenerator implements SqlGenerator {
 
             sql.append(column.getColumnName()).append(" ");
 
-            if (column.isAutoIncrement()) {
-                sql.append("SERIAL");
-            } else {
-                sql.append(column.getSqlType().toUpperCase());
-                if (column.getLength() > 0) {
-                    sql.append("(").append(column.getLength()).append(")");
-                }
-            }
+            addAttributes(column, sql);
 
-            if (!column.isNullable()) {
-                sql.append(" NOT NULL");
-            }
-
-            // ✅ UNIQUE
-            if (column.isUnique()) {
-                sql.append(" UNIQUE");
-            }
-
-            // ✅ DEFAULT VALUE
-            if (column.getDefaultValue() != null) {
-                Object def = column.getDefaultValue().getValue();
-                if (def instanceof String) {
-                    sql.append(" DEFAULT '").append(def).append("'");
-                } else {
-                    sql.append(" DEFAULT ").append(def);
-                }
-            }
-
-            // ✅ PRIMARY KEY
-            if (column.isPrimaryKey()) {
-                sql.append(" PRIMARY KEY");
-            }
-
-            // ✅ פסיק בין עמודות
             if (i < table.getColumns().size() - 1) {
                 sql.append(", ");
             }
@@ -63,7 +31,7 @@ public class PostgresSqlGenerator implements SqlGenerator {
     }
 
     @Override
-    public String deleteTable(TableMetadata table) {
+    public String getDeleteTable(TableMetadata table) {
         return "DROP TABLE IF EXISTS " + table.getName() + ";";
     }
 
@@ -75,5 +43,39 @@ public class PostgresSqlGenerator implements SqlGenerator {
             case S_BOOLEAN -> "BOOLEAN";
             default -> throw new IllegalArgumentException("Unsupported schema type: " + schemaType);
         };
+    }
+
+    @Override
+    public void addAttributes(ColumnMetadata column, StringBuilder sql) {
+        if (column.isAutoIncrement()) {
+            sql.append("SERIAL");
+        } else {
+            sql.append(column.getSqlType());
+            if (column.getLength() > 0) {
+                sql.append("(").append(column.getLength()).append(")");
+            }
+        }
+
+        if (!column.isNullable()) {
+            sql.append(" NOT NULL");
+        }
+
+        if (column.isUnique()) {
+            sql.append(" UNIQUE");
+        }
+
+        if (column.getDefaultValue() != null) {
+            Object def = column.getDefaultValue().getValue();
+            if (def instanceof String) {
+                sql.append(" DEFAULT '").append(def).append("'");
+            } else {
+                sql.append(" DEFAULT ").append(def);
+            }
+        }
+
+        if (column.isPrimaryKey()) {
+            sql.append(" PRIMARY KEY");
+        }
+
     }
 }
